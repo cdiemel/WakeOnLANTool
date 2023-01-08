@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace WakeOnLANTool
 {
-    public partial class Form1 : Form
+    public partial class WOLToolForm1 : Form
     {
-        public Form1()
+        public WOLToolForm1()
         {
             InitializeComponent();
+        }
+
+        private void TitleLabel_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

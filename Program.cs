@@ -16,7 +16,7 @@ namespace WakeOnLANTool
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new WOLToolForm1());
         }
     }
 }
