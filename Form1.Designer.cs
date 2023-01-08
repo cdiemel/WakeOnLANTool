@@ -34,10 +34,10 @@ namespace WakeOnLANTool
             this.HostnameLabel = new System.Windows.Forms.Label();
             this.IPAddressLabel = new System.Windows.Forms.Label();
             this.IPAddressInput = new System.Windows.Forms.TextBox();
-            this.MACInput = new System.Windows.Forms.Label();
-            this.textBox2 = new System.Windows.Forms.TextBox();
+            this.MACLabel = new System.Windows.Forms.Label();
+            this.MACInput = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this.OutputBox = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
             // 
             // HostnameInput
@@ -46,6 +46,8 @@ namespace WakeOnLANTool
             this.HostnameInput.Name = "HostnameInput";
             this.HostnameInput.Size = new System.Drawing.Size(113, 20);
             this.HostnameInput.TabIndex = 0;
+            this.HostnameInput.KeyPress += this.HostnameInput_ModifiedChanged;
+            this.HostnameInput.LostFocus += this.getIPFromHostname;
             // 
             // TitleLabel
             // 
@@ -85,22 +87,22 @@ namespace WakeOnLANTool
             this.IPAddressInput.Size = new System.Drawing.Size(113, 20);
             this.IPAddressInput.TabIndex = 3;
             // 
+            // MACLabel
+            // 
+            this.MACLabel.AutoSize = true;
+            this.MACLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.MACLabel.Location = new System.Drawing.Point(12, 100);
+            this.MACLabel.Name = "MACLabel";
+            this.MACLabel.Size = new System.Drawing.Size(91, 16);
+            this.MACLabel.TabIndex = 6;
+            this.MACLabel.Text = "MAC Address";
+            // 
             // MACInput
             // 
-            this.MACInput.AutoSize = true;
-            this.MACInput.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.MACInput.Location = new System.Drawing.Point(12, 100);
+            this.MACInput.Location = new System.Drawing.Point(109, 99);
             this.MACInput.Name = "MACInput";
-            this.MACInput.Size = new System.Drawing.Size(91, 16);
-            this.MACInput.TabIndex = 6;
-            this.MACInput.Text = "MAC Address";
-            // 
-            // textBox2
-            // 
-            this.textBox2.Location = new System.Drawing.Point(109, 99);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(113, 20);
-            this.textBox2.TabIndex = 5;
+            this.MACInput.Size = new System.Drawing.Size(113, 20);
+            this.MACInput.TabIndex = 5;
             // 
             // SendButton
             // 
@@ -110,27 +112,30 @@ namespace WakeOnLANTool
             this.SendButton.TabIndex = 7;
             this.SendButton.Text = "SEND";
             this.SendButton.UseVisualStyleBackColor = true;
+            this.SendButton.Click += new System.EventHandler(this.SendButton_Click);
             // 
-            // textBox1
+            // OutputBox
             // 
-            this.textBox1.AcceptsReturn = true;
-            this.textBox1.AcceptsTab = true;
-            this.textBox1.Location = new System.Drawing.Point(15, 154);
-            this.textBox1.Multiline = true;
-            this.textBox1.Name = "textBox1";
-            this.textBox1.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-            this.textBox1.Size = new System.Drawing.Size(207, 151);
-            this.textBox1.TabIndex = 8;
+            this.OutputBox.AcceptsReturn = true;
+            this.OutputBox.AcceptsTab = true;
+            this.OutputBox.Location = new System.Drawing.Point(15, 154);
+            this.OutputBox.Multiline = true;
+            this.OutputBox.Name = "OutputBox";
+            this.OutputBox.ReadOnly = true;
+            this.OutputBox.ScrollBars = System.Windows.Forms.ScrollBars.Both;
+            this.OutputBox.Size = new System.Drawing.Size(207, 151);
+            this.OutputBox.TabIndex = 8;
+            this.OutputBox.TabStop = false;
             // 
             // WOLToolForm1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(236, 317);
-            this.Controls.Add(this.textBox1);
+            this.ClientSize = new System.Drawing.Size(235, 316);
+            this.Controls.Add(this.OutputBox);
             this.Controls.Add(this.SendButton);
+            this.Controls.Add(this.MACLabel);
             this.Controls.Add(this.MACInput);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.IPAddressLabel);
             this.Controls.Add(this.IPAddressInput);
             this.Controls.Add(this.HostnameLabel);
@@ -150,10 +155,10 @@ namespace WakeOnLANTool
         private System.Windows.Forms.Label HostnameLabel;
         private System.Windows.Forms.Label IPAddressLabel;
         private System.Windows.Forms.TextBox IPAddressInput;
-        private System.Windows.Forms.Label MACInput;
-        private System.Windows.Forms.TextBox textBox2;
+        private System.Windows.Forms.Label MACLabel;
+        private System.Windows.Forms.TextBox MACInput;
         private System.Windows.Forms.Button SendButton;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox OutputBox;
     }
 }
 
