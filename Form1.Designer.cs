@@ -46,8 +46,6 @@ namespace WakeOnLANTool
             this.HostnameInput.Name = "HostnameInput";
             this.HostnameInput.Size = new System.Drawing.Size(113, 20);
             this.HostnameInput.TabIndex = 0;
-            this.HostnameInput.KeyPress += this.HostnameInput_ModifiedChanged;
-            this.HostnameInput.LostFocus += this.getIPFromHostname;
             // 
             // TitleLabel
             // 
@@ -84,6 +82,7 @@ namespace WakeOnLANTool
             // 
             this.IPAddressInput.Location = new System.Drawing.Point(109, 72);
             this.IPAddressInput.Name = "IPAddressInput";
+            this.IPAddressInput.ReadOnly = true;
             this.IPAddressInput.Size = new System.Drawing.Size(113, 20);
             this.IPAddressInput.TabIndex = 3;
             // 
