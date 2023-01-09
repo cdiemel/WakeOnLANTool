@@ -6,6 +6,7 @@ using System.Drawing;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -50,7 +51,57 @@ namespace WakeOnLANTool
             {
                 this.IPAddressInput.ReadOnly = false;
             }
+
+        }
+
+        private void MACInput_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
+        {
+            Console.WriteLine(sender.ToString());
+            Console.WriteLine($"hint: {e.RejectionHint.ToString()}");
+            Console.WriteLine($"position: {e.Position.ToString()}");
+            //throw new System.NotImplementedException();
+        }
+
+        private bool ValidIPv4(string ipAddress)
+        {
+            string pattern  = @"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
+            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
+            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
+            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b";
+
+            if(!Regex.IsMatch(ipAddress, pattern))
+            {
+                throw new FormatException($"{ipAddress} is not a valid IPv4 Address.");
+            }
             
+            return true;
+
+            //throw new System.NotImplementedException();
+        }
+
+        private void IPAddressInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
+        {
+            if (!e.IsValidInput)
+            {
+                this.IPAddressInput.ForeColor = Color.Red;
+                this.ToolTip.Show("Invalid IP Address", IPAddressInput, 5000);
+                //e.Cancel = true;
+                return;
+            }
+            try
+            {
+                this.ValidIPv4(this.IPAddressInput.Text);
+            }
+            catch (FormatException bad_format)
+            {
+                Console.WriteLine(bad_format.Message);
+                this.OutputBox.Text += bad_format.Message + Environment.NewLine;
+                this.IPAddressInput.ForeColor = Color.Red;
+                this.ToolTip.Show("Invalid IP Address", IPAddressInput, 5000);
+                return;
+            }
+
+            this.IPAddressInput.ForeColor = Color.Black;
         }
     }
 
@@ -67,14 +118,9 @@ namespace WakeOnLANTool
             } catch (Exception hostname_except)
             {
                 Console.WriteLine(hostname_except.ToString());
-                //return new IPAddress(0x00000000);
-                //return new IPAddress(0x4F50A8C0);
                 throw hostname_except;
             }
             Console.WriteLine(host.HostName);
-            //Console.WriteLine(host.ToString());
-            //Console.WriteLine(host.HostName);
-            //Console.WriteLine(host.AddressList.ToArray().ToString());
             foreach(IPAddress addr in host.AddressList)
             {
                 if(addr.AddressFamily == System.Net.Sockets.AddressFamily.InterNetwork)
@@ -86,9 +132,49 @@ namespace WakeOnLANTool
             }
 
             // 192.168.80.79
-            return new IPAddress(0x00000000);
             //return new IPAddress(0x4F50A8C0);
+            return new IPAddress(0x00000000);
 
+        }
+    
+        public class MACAddress
+        {
+            public string rawString;
+            public MACAddress(string macString)
+            {
+                this.rawString = macString;
+            }
+
+            /// <summary>
+            ///     Converts an IP address string to an System.Net.IPAddress instance.
+            /// </summary>
+            /// <param name="macString">
+            ///     A string that contains a MAC address in hexadecimal notation.
+            /// <code>
+            /// AABBCCDDEEFF
+            /// AA:BB:CC:DD:EE:FF
+            /// AA-BB-CC-DD-EE-FF
+            /// </code>
+            /// </param>
+            /// <returns>A <see cref="WakeOnLANTool"/>.<see cref="Helpers"/>.<see cref="MACAddress"/> instance.</returns>
+            /// <exception cref="System.ArgumentNullException">macString is null</exception>
+            /// <exception cref="System.FormatException">macString is not a valid MAC address</exception>
+            public static MACAddress Parse(string macString)
+            {
+                if(macString is null) { throw new ArgumentNullException("macString", "is null"); }
+                return new MACAddress(macString);
+            }
+            /// <summary>
+            ///     Determines whether a string is a valid MAC address.
+            /// </summary>
+            /// <param name="macString">The string to validate.</param>
+            /// <param name="address">The <see cref="WakeOnLANTool"/>.<see cref="Helpers"/>.<see cref="MACAddress"/> version of the string.</param>
+            /// <returns>true if macString was able to be parsed as a MAC address; otherwise, false.</returns>
+            public static bool TryParse(string macString, out MACAddress address)
+            {
+                address = new MACAddress(macString);
+                return true;
+            }
         }
     }
 }

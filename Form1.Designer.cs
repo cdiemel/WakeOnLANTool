@@ -1,4 +1,7 @@
 ﻿
+using System;
+using System.Windows.Forms;
+
 namespace WakeOnLANTool
 {
     partial class WOLToolForm1
@@ -30,14 +33,15 @@ namespace WakeOnLANTool
         private void InitializeComponent()
         {
             this.HostnameInput = new System.Windows.Forms.TextBox();
+            this.IPAddressInput = new System.Windows.Forms.MaskedTextBox();
+            this.MACInput = new System.Windows.Forms.MaskedTextBox();
+            this.OutputBox = new System.Windows.Forms.TextBox();
             this.TitleLabel = new System.Windows.Forms.Label();
             this.HostnameLabel = new System.Windows.Forms.Label();
             this.IPAddressLabel = new System.Windows.Forms.Label();
-            this.IPAddressInput = new System.Windows.Forms.TextBox();
             this.MACLabel = new System.Windows.Forms.Label();
-            this.MACInput = new System.Windows.Forms.TextBox();
             this.SendButton = new System.Windows.Forms.Button();
-            this.OutputBox = new System.Windows.Forms.TextBox();
+            this.ToolTip = new System.Windows.Forms.ToolTip();
             this.SuspendLayout();
             // 
             // HostnameInput
@@ -46,6 +50,7 @@ namespace WakeOnLANTool
             this.HostnameInput.Name = "HostnameInput";
             this.HostnameInput.Size = new System.Drawing.Size(113, 20);
             this.HostnameInput.TabIndex = 0;
+            this.HostnameInput.LostFocus += this.getIPFromHostname;
             // 
             // TitleLabel
             // 
@@ -85,6 +90,9 @@ namespace WakeOnLANTool
             this.IPAddressInput.ReadOnly = true;
             this.IPAddressInput.Size = new System.Drawing.Size(113, 20);
             this.IPAddressInput.TabIndex = 3;
+            this.IPAddressInput.ValidatingType = typeof(System.Net.IPAddress);
+            this.IPAddressInput.TypeValidationCompleted += new TypeValidationEventHandler(IPAddressInput_TypeValidationCompleted);
+            
             // 
             // MACLabel
             // 
@@ -102,6 +110,8 @@ namespace WakeOnLANTool
             this.MACInput.Name = "MACInput";
             this.MACInput.Size = new System.Drawing.Size(113, 20);
             this.MACInput.TabIndex = 5;
+            this.MACInput.ValidatingType = typeof(WakeOnLANTool.Helpers.MACAddress);
+            this.MACInput.MaskInputRejected += MACInput_MaskInputRejected;
             // 
             // SendButton
             // 
@@ -150,14 +160,15 @@ namespace WakeOnLANTool
         #endregion
 
         private System.Windows.Forms.TextBox HostnameInput;
+        private System.Windows.Forms.MaskedTextBox IPAddressInput;
+        private System.Windows.Forms.MaskedTextBox MACInput;
+        private System.Windows.Forms.TextBox OutputBox;
         private System.Windows.Forms.Label TitleLabel;
         private System.Windows.Forms.Label HostnameLabel;
         private System.Windows.Forms.Label IPAddressLabel;
-        private System.Windows.Forms.TextBox IPAddressInput;
         private System.Windows.Forms.Label MACLabel;
-        private System.Windows.Forms.TextBox MACInput;
         private System.Windows.Forms.Button SendButton;
-        private System.Windows.Forms.TextBox OutputBox;
+        private System.Windows.Forms.ToolTip ToolTip;
     }
 }
 
