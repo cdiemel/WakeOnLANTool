@@ -29,16 +29,8 @@ namespace WakeOnLANTool
             this.OutputBox.Text += "test" + Environment.NewLine;
         }
 
-        private void HostnameInput_ModifiedChanged(object sender, EventArgs e)
-        {
-            //this.OutputBox.Text += e.ToString() + Environment.NewLine;
-            //this.OutputBox.Text += sender.ToString() + Environment.NewLine;
-            //MessageBox.Show("You are in the TextBoxBase.ModifiedChanged event.");
-        }
-
         private void getIPFromHostname(object sender, EventArgs e)
         {
-            //this.OutputBox.Text += e.ToString() + Environment.NewLine;
             string hostname = this.HostnameInput.Text + Helpers.domain;
             this.OutputBox.Text += $"Hostname: {hostname}" + Environment.NewLine;
             try
@@ -59,7 +51,6 @@ namespace WakeOnLANTool
             Console.WriteLine(sender.ToString());
             Console.WriteLine($"hint: {e.RejectionHint.ToString()}");
             Console.WriteLine($"position: {e.Position.ToString()}");
-            //throw new System.NotImplementedException();
         }
 
         private bool ValidIPv4(string ipAddress)
@@ -76,7 +67,6 @@ namespace WakeOnLANTool
             
             return true;
 
-            //throw new System.NotImplementedException();
         }
 
         private void IPAddressInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
@@ -85,7 +75,7 @@ namespace WakeOnLANTool
             {
                 this.IPAddressInput.ForeColor = Color.Red;
                 this.ToolTip.Show("Invalid IP Address", IPAddressInput, 5000);
-                //e.Cancel = true;
+                e.Cancel = true;
                 return;
             }
             try
