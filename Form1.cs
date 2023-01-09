@@ -55,12 +55,9 @@ namespace WakeOnLANTool
 
         private bool ValidIPv4(string ipAddress)
         {
-            string pattern  = @"\b(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
-            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
-            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\.";
-            pattern += @"(25[0-5]|2[0-4][0-9]|[01]?[0-9][0-9]?)\b";
+            string pattern = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.?){4,4}$";
 
-            if(!Regex.IsMatch(ipAddress, pattern))
+            if (!Regex.IsMatch(ipAddress, pattern))
             {
                 throw new FormatException($"{ipAddress} is not a valid IPv4 Address.");
             }
