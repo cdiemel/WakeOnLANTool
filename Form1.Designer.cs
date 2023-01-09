@@ -111,7 +111,7 @@ namespace WakeOnLANTool
             this.MACInput.Size = new System.Drawing.Size(113, 20);
             this.MACInput.TabIndex = 5;
             this.MACInput.ValidatingType = typeof(WakeOnLANTool.Helpers.MACAddress);
-            this.MACInput.MaskInputRejected += MACInput_MaskInputRejected;
+            this.MACInput.TypeValidationCompleted += new TypeValidationEventHandler(MACInput_TypeValidationCompleted);
             // 
             // SendButton
             // 

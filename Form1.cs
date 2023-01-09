@@ -103,9 +103,23 @@ namespace WakeOnLANTool
 
             this.IPAddressInput.ForeColor = Color.Black;
         }
-    }
 
-    public static class Helpers
+        private void MACInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
+        {
+            Console.WriteLine("MACInput_TypeValidationCompleted");
+            if (!e.IsValidInput)
+            {
+                this.MACInput.ForeColor = Color.Red;
+                this.ToolTip.Show("Invalid MAC Address", MACInput, 5000);
+                e.Cancel = true;
+                return;
+            }
+
+            this.MACInput.ForeColor = Color.Black;
+        }
+}
+
+public static class Helpers
     {
         static public string domain = ".lan";
 
@@ -140,7 +154,7 @@ namespace WakeOnLANTool
         public class MACAddress
         {
             public string rawString;
-            public MACAddress(string macString)
+            public MACAddress(string macString=null)
             {
                 this.rawString = macString;
             }
@@ -161,8 +175,14 @@ namespace WakeOnLANTool
             /// <exception cref="System.FormatException">macString is not a valid MAC address</exception>
             public static MACAddress Parse(string macString)
             {
-                if(macString is null) { throw new ArgumentNullException("macString", "is null"); }
-                return new MACAddress(macString);
+                if (macString is null) { throw new ArgumentNullException("macString", "is null"); }
+                macString = macString.ToUpper();
+                string pattern = @"^([0-9A-F]{2,2}[:-]?){6,6}$";
+                if(Regex.IsMatch(macString, pattern))
+                {
+                    return new MACAddress(macString);
+                }
+                throw new FormatException($"{macString} is not a valid MAC address.");
             }
             /// <summary>
             ///     Determines whether a string is a valid MAC address.
@@ -172,8 +192,17 @@ namespace WakeOnLANTool
             /// <returns>true if macString was able to be parsed as a MAC address; otherwise, false.</returns>
             public static bool TryParse(string macString, out MACAddress address)
             {
-                address = new MACAddress(macString);
-                return true;
+                try
+                {
+                    address = MACAddress.Parse(macString);
+                    return true;
+                } 
+                catch
+                {
+                    address = null;
+                    return false;
+                }
+                
             }
         }
     }
