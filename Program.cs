@@ -20,4 +20,27 @@ namespace WakeOnLANTool
             Application.Run(new WOLToolForm1());
         }
     }
+
+    public class WakeOnLANSession
+    {
+        private readonly Helpers.IPv4Address ipAddress;
+        private readonly Helpers.MACAddress macAddress;
+
+        public WakeOnLANSession(Helpers.IPv4Address ip, Helpers.MACAddress mac)
+        {
+            this.ipAddress = ip;
+            this.macAddress = mac;
+        }
+        public void Send()
+        {
+
+        }
+        private class Packet
+        {
+            public Packet()
+            {
+
+            }
+        }
+    }
 }

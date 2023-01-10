@@ -29,6 +29,10 @@ namespace WakeOnLANTool
         private void SendButton_Click(object sender, EventArgs e)
         {
             this.OutputBox.Text += "test" + Environment.NewLine;
+            Helpers.IPv4Address ip = new Helpers.IPv4Address(this.IPAddressInput.Text);
+            Helpers.MACAddress mac = new Helpers.MACAddress(this.MACInput.Text);
+            WakeOnLANSession wols = new WakeOnLANSession(ip,mac);
+            wols.Send();
         }
 
         private void getIPFromHostname(object sender, EventArgs e)
