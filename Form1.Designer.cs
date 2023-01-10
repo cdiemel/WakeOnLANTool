@@ -90,7 +90,7 @@ namespace WakeOnLANTool
             this.IPAddressInput.ReadOnly = true;
             this.IPAddressInput.Size = new System.Drawing.Size(113, 20);
             this.IPAddressInput.TabIndex = 3;
-            this.IPAddressInput.ValidatingType = typeof(System.Net.IPAddress);
+            this.IPAddressInput.ValidatingType = typeof(WakeOnLANTool.Helpers.IPv4Address);
             this.IPAddressInput.TypeValidationCompleted += new TypeValidationEventHandler(IPAddressInput_TypeValidationCompleted);
             
             // 

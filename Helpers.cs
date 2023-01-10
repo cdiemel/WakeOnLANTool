@@ -38,10 +38,10 @@ namespace WakeOnLANTool
     
         public class MACAddress
         {
-            public string rawString;
+            public string str_MAC;
             public MACAddress(string macString=null)
             {
-                this.rawString = macString;
+                this.str_MAC = macString;
             }
 
             /// <summary>
@@ -87,7 +87,11 @@ namespace WakeOnLANTool
                     address = null;
                     return false;
                 }
-                
+            }
+            public override string ToString()
+            {
+                return this.str_MAC;
+                //return base.ToString();
             }
         }
 
@@ -98,7 +102,6 @@ namespace WakeOnLANTool
             {
                 this.str_IP = ipString;
             }
-
             public static IPv4Address Parse(string ipString)
             {
                 if (ipString is null) { throw new ArgumentNullException("ipString", "is null"); }
@@ -108,6 +111,11 @@ namespace WakeOnLANTool
                     return new IPv4Address(ipString);
                 }
                 throw new FormatException($"{ipString} is not a valid IP address.");
+            }
+            public override string ToString()
+            {
+                return this.str_IP;
+                //return base.ToString();
             }
         }
 
