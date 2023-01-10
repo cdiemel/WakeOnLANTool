@@ -114,6 +114,10 @@ namespace WakeOnLANTool
                 }
                 throw new FormatException($"{ipString} is not a valid IP address.");
             }
+            public long ToLong()
+            {
+                return this.class_IP.Address;
+            }
             public override string ToString()
             {
                 return this.str_IP;

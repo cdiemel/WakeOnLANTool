@@ -7,6 +7,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -25,6 +26,7 @@ namespace WakeOnLANTool
         {
 
         }
+
 
         private void SendButton_Click(object sender, EventArgs e)
         {
