@@ -117,6 +117,7 @@ namespace WakeOnLANTool
             // 
             this.SendButton.Location = new System.Drawing.Point(109, 125);
             this.SendButton.Name = "SendButton";
+            this.SendButton.Enabled = false;
             this.SendButton.Size = new System.Drawing.Size(113, 23);
             this.SendButton.TabIndex = 7;
             this.SendButton.Text = "SEND";

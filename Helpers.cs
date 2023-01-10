@@ -98,14 +98,16 @@ namespace WakeOnLANTool
         public class IPv4Address
         {
             String str_IP;
+            IPAddress class_IP;
             public IPv4Address(string ipString)
             {
                 this.str_IP = ipString;
+                this.class_IP = IPAddress.Parse(ipString);
             }
             public static IPv4Address Parse(string ipString)
             {
                 if (ipString is null) { throw new ArgumentNullException("ipString", "is null"); }
-                string pattern = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.?){4,4}$";
+                string pattern = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.){3,3}(25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])$";
                 if (Regex.IsMatch(ipString, pattern))
                 {
                     return new IPv4Address(ipString);

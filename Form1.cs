@@ -14,6 +14,8 @@ namespace WakeOnLANTool
 {
     public partial class WOLToolForm1 : Form
     {
+        private Boolean bool_IPValid = false;
+        private Boolean bool_MACValid = false;
         public WOLToolForm1()
         {
             InitializeComponent();
@@ -48,14 +50,22 @@ namespace WakeOnLANTool
 
         private void IPAddressInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
         {
+            Console.WriteLine("IPAddressInput_TypeValidationCompleted");
             if (!e.IsValidInput)
             {
                 this.IPAddressInput.ForeColor = Color.Red;
                 this.ToolTip.Show("Invalid IP Address", IPAddressInput, 5000);
-                e.Cancel = true;
+                //e.Cancel = true;
+                this.bool_IPValid = false;
+                this.SendButton.Enabled = false;
                 return;
             }
+            this.bool_IPValid = true;
             this.IPAddressInput.ForeColor = Color.Black;
+            if(this.bool_IPValid & this.bool_MACValid)
+            {
+                this.SendButton.Enabled = true;
+            }
         }
 
         private void MACInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
@@ -65,11 +75,17 @@ namespace WakeOnLANTool
             {
                 this.MACInput.ForeColor = Color.Red;
                 this.ToolTip.Show("Invalid MAC Address", MACInput, 5000);
-                e.Cancel = true;
+                //e.Cancel = true;
+                this.bool_MACValid = false;
+                this.SendButton.Enabled = false;
                 return;
             }
-
+            this.bool_MACValid = true;
             this.MACInput.ForeColor = Color.Black;
+            if (this.bool_IPValid & this.bool_MACValid)
+            {
+                this.SendButton.Enabled = true;
+            }
         }
     }
 }
