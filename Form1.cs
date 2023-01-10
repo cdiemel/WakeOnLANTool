@@ -46,26 +46,6 @@ namespace WakeOnLANTool
 
         }
 
-        private void MACInput_MaskInputRejected(object sender, MaskInputRejectedEventArgs e)
-        {
-            Console.WriteLine(sender.ToString());
-            Console.WriteLine($"hint: {e.RejectionHint.ToString()}");
-            Console.WriteLine($"position: {e.Position.ToString()}");
-        }
-
-        private bool ValidIPv4(string ipAddress)
-        {
-            string pattern = @"^((25[0-5]|2[0-4][0-9]|[01]?[0-9]?[0-9])\.?){4,4}$";
-
-            if (!Regex.IsMatch(ipAddress, pattern))
-            {
-                throw new FormatException($"{ipAddress} is not a valid IPv4 Address.");
-            }
-            
-            return true;
-
-        }
-
         private void IPAddressInput_TypeValidationCompleted(object sender, TypeValidationEventArgs e)
         {
             if (!e.IsValidInput)
@@ -75,19 +55,6 @@ namespace WakeOnLANTool
                 e.Cancel = true;
                 return;
             }
-            try
-            {
-                this.ValidIPv4(this.IPAddressInput.Text);
-            }
-            catch (FormatException bad_format)
-            {
-                Console.WriteLine(bad_format.Message);
-                this.OutputBox.Text += bad_format.Message + Environment.NewLine;
-                this.IPAddressInput.ForeColor = Color.Red;
-                this.ToolTip.Show("Invalid IP Address", IPAddressInput, 5000);
-                return;
-            }
-
             this.IPAddressInput.ForeColor = Color.Black;
         }
 
